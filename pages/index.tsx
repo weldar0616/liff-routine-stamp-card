@@ -1,8 +1,9 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import Calendar from "react-calendar";
 import prisma from "../lib/prisma";
+import styles from "../styles/Home.module.css";
 
 interface ReportsProps {
   reports: typeof prisma.reports;
@@ -10,6 +11,7 @@ interface ReportsProps {
 
 const Home: NextPage<ReportsProps> = ({ reports }) => {
   console.log(reports); // TEST
+
   return (
     <div className={styles.container}>
       <Head>
@@ -56,6 +58,11 @@ const Home: NextPage<ReportsProps> = ({ reports }) => {
               Instantly deploy your Next.js site to a public URL with Vercel.
             </p>
           </a>
+        </div>
+
+        {/* TEST */}
+        <div>
+          <Calendar value={new Date()}></Calendar>
         </div>
       </main>
 
