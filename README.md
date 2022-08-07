@@ -18,6 +18,11 @@
 - [deploy/hosting] Vervel
 ## 参考資料
 - [Next.js､ Prisma､PostgreSQLでフルスタックアプリを作る](https://qiita.com/tomohiko_ohhashi/items/da804ed1f5870c9ce52d)
+- Heroku Postgres下準備
+  - [How to set up a free PostgreSQL database on Heroku](https://dev.to/prisma/how-to-setup-a-free-postgresql-database-on-heroku-1dc1)
+  - [Heroku CLI](https://devcenter.heroku.com/ja/articles/heroku-cli)
+  - [PostgreSQLのインストール](https://k-sasaking.net/programing/heroku-postgres-install/)
+- [TypeScript ORM「Prisma」のはじめかた](https://www.memory-lovers.blog/entry/2021/10/13/113000)
 
 ---
 
