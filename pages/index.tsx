@@ -1,9 +1,15 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import prisma from "../lib/prisma";
 
-const Home: NextPage = (props) => {
+interface ReportsProps {
+  reports: typeof prisma.reports;
+}
+
+const Home: NextPage<ReportsProps> = ({ reports }) => {
+  console.log(reports); // TEST
   return (
     <div className={styles.container}>
       <Head>
@@ -67,6 +73,28 @@ const Home: NextPage = (props) => {
       </footer>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const reports = await prisma.reports.findMany({
+    select: {
+      id: false,
+      date: true,
+      user_name: true,
+      kind: false,
+    },
+    where: {
+      date: {
+        // TEST
+        // 前後三ヶ月にする？
+        gte: new Date("2022-07-01"),
+        lt: new Date("2022-09-30"),
+      },
+      kind: 1, // TODO: 種別テーブルを用意すべき
+    },
+  });
+  const jsonReports = JSON.parse(JSON.stringify(reports));
+  return { props: { reports: jsonReports } };
 };
 
 export default Home;
