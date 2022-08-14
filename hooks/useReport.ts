@@ -36,6 +36,7 @@ const postReport = async (userName: string) => {
 export const useReport = (liffId: string) => {
   useEffect(() => {
     (async () => {
+      alert(`${process.env.LIFF_ID_POST_APP}`)
       try {
         const userName = await getProfile(liffId);
         await Promise.all([sendMessage(userName), postReport(userName)]);

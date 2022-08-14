@@ -2,8 +2,6 @@ import { NextPage } from "next";
 import { useReport } from "../../hooks/useReport";
 
 const ReportsPost: NextPage = () => {
-  alert(`${process.env.LIFF_ID_POST_APP}`)
-
   useReport(`${process.env.LIFF_ID_POST_APP}`); // FIXME: env types
 
   return <>送信中...</>;
