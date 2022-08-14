@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Calendar, {
-  CalendarProps,
   CalendarTileProperties,
   DateCallback,
 } from "react-calendar";
