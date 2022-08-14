@@ -1,10 +1,17 @@
+import { Liff } from "@line/liff";
 import { useEffect } from "react";
 
-const getProfile = async (liffId: string) => {
-  // FIXME: liffIDをリクエストパラメータに含めるのは良くない
-  const response = await fetch(`/api/line/profile?liffId=${liffId}`);
-  const data = await response.json();
-  return data.userName;
+const fetchProfile = async (liff: Liff, liffId: string) => {
+  await liff.init({ liffId }).catch((error) => {
+    alert(`[liff#init error] ${error}`);
+  });
+
+  const profile = await liff.getProfile().catch((error) => {
+    if (process.env.NODE_ENV !== "test") {
+      alert(`[liff#getProfile error] ${error}: LIFF ID = ${liffId}`);
+    }
+  });
+  return profile;
 };
 
 const sendMessage = async (userName: string) => {
@@ -41,10 +48,16 @@ export const useReport = (liffId: string) => {
         // TEST
         let userName = "";
         try {
-          userName = await getProfile(liffId); // FIXME
+          const liff = (await import("@line/liff")).default;
+          const profile = await fetchProfile(liff, liffId);  // FIXME
+          if (!profile) {
+            return;
+          }
+
+          userName = profile.displayName;
         } catch (e) {
           if (e instanceof Error) {
-            alert("getProfile Error")
+            alert("getProfile Error");
             throw e;
           }
         }
@@ -52,7 +65,7 @@ export const useReport = (liffId: string) => {
           await sendMessage(userName);
         } catch (e) {
           if (e instanceof Error) {
-            alert("sendMessage Error")
+            alert("sendMessage Error");
             throw e;
           }
         }
@@ -60,7 +73,7 @@ export const useReport = (liffId: string) => {
           await postReport(userName);
         } catch (e) {
           if (e instanceof Error) {
-            alert("postReport Error")
+            alert("postReport Error");
             throw e;
           }
         }
