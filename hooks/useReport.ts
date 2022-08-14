@@ -41,8 +41,8 @@ const postReport = async (userName: string) => {
 export const useReport = (liffId: string) => {
   useEffect(() => {
     (async () => {
+      const liff = (await import("@line/liff")).default;
       try {
-        const liff = (await import("@line/liff")).default;
         const profile = await fetchProfile(liff, liffId);
         if (!profile) {
           return;
@@ -59,7 +59,6 @@ export const useReport = (liffId: string) => {
       } finally {
         // Close rich menu
         if (process.env.NODE_ENV === "production") {
-          const liff = (await import("@line/liff")).default;
           liff.closeWindow();
         }
       }
