@@ -18,8 +18,6 @@ export default async function handler(
   const { userName } = JSON.parse(req.body);
   const message = `${userName}さんがトランポリンを実施しました`;
 
-  console.log({ userName, message });
-
   try {
     await axios({
       method: "POST",

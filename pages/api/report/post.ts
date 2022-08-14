@@ -13,6 +13,8 @@ export default async function handler(
   const { userName } = JSON.parse(req.body);
 
   try {
+    // FIXME: DBに登録される日付がずれている...
+    // postgresqlのTimeZoneはAsiaにした
     const result = await prisma.reports.create({
       data: {
         date: today,

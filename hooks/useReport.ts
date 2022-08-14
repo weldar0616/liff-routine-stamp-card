@@ -42,41 +42,14 @@ export const useReport = (liffId: string) => {
   useEffect(() => {
     (async () => {
       try {
-        // const userName = await getProfile(liffId);
-        // await Promise.all([sendMessage(userName), postReport(userName)]);
+        const liff = (await import("@line/liff")).default;
+        const profile = await fetchProfile(liff, liffId);
+        if (!profile) {
+          return;
+        }
+        const userName = profile.displayName;
 
-        // TEST
-        let userName = "";
-        try {
-          const liff = (await import("@line/liff")).default;
-          const profile = await fetchProfile(liff, liffId);  // FIXME
-          if (!profile) {
-            return;
-          }
-
-          userName = profile.displayName;
-        } catch (e) {
-          if (e instanceof Error) {
-            alert("getProfile Error");
-            throw e;
-          }
-        }
-        try {
-          await sendMessage(userName);
-        } catch (e) {
-          if (e instanceof Error) {
-            alert("sendMessage Error");
-            throw e;
-          }
-        }
-        try {
-          await postReport(userName);
-        } catch (e) {
-          if (e instanceof Error) {
-            alert("postReport Error");
-            throw e;
-          }
-        }
+        await Promise.all([sendMessage(userName), postReport(userName)]);
       } catch (e) {
         if (e instanceof Error) {
           alert(e.message);
