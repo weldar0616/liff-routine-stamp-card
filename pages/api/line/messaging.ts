@@ -30,8 +30,8 @@ export default async function handler(
       },
     });
   } catch (err) {
-    // TODO
-    res.status(400); // .json(JSON.parse(err.message));
+    res.status(500);
+    res.statusMessage = axios.isAxiosError(err) ? err.message : '[Error] messaging api';
     return;
   }
 

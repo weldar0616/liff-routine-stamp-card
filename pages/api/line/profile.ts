@@ -7,14 +7,8 @@ type Data = {
 };
 
 const fetchProfile = async (liff: Liff, liffId: string) => {
-  await liff.init({ liffId }).catch((error) => {
-    // alert(`[liff#init error] ${error}`);
-  });
-
-  const profile = await liff.getProfile().catch((error) => {
-    // alert(`[liff#getProfile error] ${error}: LIFF ID = ${liffId}`);
-  });
-  return profile;
+  await liff.init({ liffId });
+  return await liff.getProfile();
 };
 
 export default async function handler(
@@ -27,14 +21,22 @@ export default async function handler(
     const liffId = req.query.liffId;
 
     if (typeof liffId === "string") {
-      const profile = await fetchProfile(liff, liffId);
-      if (!profile) {
-        res.status(400); // TODO: body
+      try {
+        const profile = await fetchProfile(liff, liffId);
+        if (!profile) {
+          res.status(400); // TODO: body
+          res.statusMessage = "[Error] fetch profile";
+          return;
+        }
+        userName = profile.displayName;
+      } catch (e) {
+        res.status(500);
+        res.statusMessage = "[Error] fetch profile exception";
         return;
       }
-      userName = profile.displayName;
     } else {
-      res.status(400); // TODO: body
+      res.status(400);
+      res.statusMessage = "[Error] liffid is not string";
       return;
     }
   }

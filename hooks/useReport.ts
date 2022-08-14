@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 const getProfile = async (liffId: string) => {
+  // FIXME: liffIDをリクエストパラメータに含めるのは良くない
   const response = await fetch(`/api/line/profile?liffId=${liffId}`);
   const data = await response.json();
   return data.userName;

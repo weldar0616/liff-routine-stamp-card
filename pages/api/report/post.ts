@@ -12,13 +12,19 @@ export default async function handler(
 ) {
   const { userName } = JSON.parse(req.body);
 
-  const result = await prisma.reports.create({
-    data: {
-      date: today,
-      user_name: userName,
-      kind: 1,
-    },
-  });
+  try {
+    const result = await prisma.reports.create({
+      data: {
+        date: today,
+        user_name: userName,
+        kind: 1,
+      },
+    });
 
-  res.status(200).json(result);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400);
+    res.statusMessage = "[Error] prisma reports create";
+    return;
+  }
 }
