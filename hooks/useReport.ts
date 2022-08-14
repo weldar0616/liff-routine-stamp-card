@@ -12,17 +12,21 @@ const sendMessage = async (userName: string) => {
     method: "POST",
     body: JSON.stringify(requestData),
   });
-  const data = await response.json();
-  console.log("sendMessage", { data });
+  if (process.env.NODE_ENV !== "production") {
+    console.log("[debug]sendMessage", { response });
+  }
   return;
 };
 
 const postReport = async (userName: string) => {
   const requestData = { userName };
-  await fetch("/api/report/post", {
+  const response = await fetch("/api/report/post", {
     method: "POST",
     body: JSON.stringify(requestData),
   });
+  if (process.env.NODE_ENV !== "production") {
+    console.log("[debug]postReport", { response });
+  }
   return;
 };
 
@@ -30,9 +34,7 @@ export const useReport = (liffId: string) => {
   useEffect(() => {
     (async () => {
       const userName = await getProfile(liffId);
-      await sendMessage(userName);
-
-      // await Promise.all([sendMessage(userName), postReport(userName)]);
+      await Promise.all([sendMessage(userName), postReport(userName)]);
 
       // Close rich menu
       if (process.env.NODE_ENV === "production") {

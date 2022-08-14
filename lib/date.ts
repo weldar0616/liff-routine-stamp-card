@@ -1,5 +1,11 @@
-// Time Zoneを考慮
-export const today = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
+export const formatForView = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+export const today = new Date(formatForView(new Date()));
 export const beginningOfLastMonth = new Date(
   today.getFullYear(),
   today.getMonth() - 1,
@@ -11,9 +17,3 @@ export const endOfMonth = new Date(
   0
 );
 
-export const formatForView = (date: Date): string => {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
