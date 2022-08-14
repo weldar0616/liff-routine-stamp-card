@@ -41,7 +41,7 @@ export const useReport = (liffId: string) => {
         // TEST
         let userName = "";
         try {
-          userName = await getProfile(liffId);
+          userName = await getProfile(liffId); // FIXME
         } catch (e) {
           if (e instanceof Error) {
             alert("getProfile Error")

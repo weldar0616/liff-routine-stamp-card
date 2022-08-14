@@ -8,7 +8,8 @@ type Data = {
 
 const fetchProfile = async (liff: Liff, liffId: string) => {
   await liff.init({ liffId });
-  return await liff.getProfile();
+  const profile = await liff.getProfile();
+  return profile;
 };
 
 export default async function handler(
@@ -22,13 +23,15 @@ export default async function handler(
 
     if (typeof liffId === "string") {
       try {
-        const profile = await fetchProfile(liff, liffId);
-        if (!profile) {
-          res.status(400); // TODO: body
-          res.statusMessage = "[Error] fetch profile";
-          return;
-        }
-        userName = profile.displayName;
+        // TEST
+        userName = "tako";
+        // const profile = await fetchProfile(liff, liffId);
+        // if (!profile) {
+        //   res.status(400);
+        //   res.statusMessage = "[Error] fetch profile";
+        //   return;
+        // }
+        // userName = profile.displayName;
       } catch (e) {
         res.status(500);
         res.statusMessage = "[Error] fetch profile exception";
