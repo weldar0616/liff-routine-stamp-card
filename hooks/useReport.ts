@@ -2,7 +2,9 @@ import { useEffect } from "react";
 
 const getProfile = async (liffId: string) => {
   // FIXME: liffIDをリクエストパラメータに含めるのは良くない
-  const response = await fetch(`/api/line/profile?liffId=${liffId}`);
+  const url = `/api/line/profile?liffId=${liffId}`;
+  const encodeURI = encodeURIComponent(url);
+  const response = await fetch(encodeURI);
   const data = await response.json();
   return data.userName;
 };
