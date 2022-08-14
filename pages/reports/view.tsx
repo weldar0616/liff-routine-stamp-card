@@ -65,6 +65,7 @@ const ReportsView: NextPage<ReportsProps> = ({ reports }) => {
           onClickDay={onClickDay}
         ></Calendar>
       </main>
+      ※デザイン未調整
     </div>
   );
 };

@@ -1,4 +1,5 @@
-const today = new Date();
+// Time Zoneを考慮
+export const today = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
 export const beginningOfLastMonth = new Date(
   today.getFullYear(),
   today.getMonth() - 1,

@@ -1,18 +1,44 @@
 import { useEffect } from "react";
 
-const sendMessage = async () => {
-  // TODO: Messaging API
-};
-const postReport = async () => {
-  // TODO: insert DB
+const getProfile = async (liffId: string) => {
+  const response = await fetch(`/api/line/profile?liffId=${liffId}`);
+  const data = await response.json();
+  return data.userName;
 };
 
-export const useReport = () => {
+const sendMessage = async (userName: string) => {
+  const requestData = { userName };
+  const response = await fetch("/api/line/messaging", {
+    method: "POST",
+    body: JSON.stringify(requestData),
+  });
+  const data = await response.json();
+  console.log("sendMessage", { data });
+  return;
+};
+
+const postReport = async (userName: string) => {
+  const requestData = { userName };
+  await fetch("/api/report/post", {
+    method: "POST",
+    body: JSON.stringify(requestData),
+  });
+  return;
+};
+
+export const useReport = (liffId: string) => {
   useEffect(() => {
-    console.log("useReport");
-    async () => {
-      await Promise.all([sendMessage, postReport]);
-      // TODO: close rich menu
-    };
+    (async () => {
+      const userName = await getProfile(liffId);
+      await sendMessage(userName);
+
+      // await Promise.all([sendMessage(userName), postReport(userName)]);
+
+      // Close rich menu
+      if (process.env.NODE_ENV === "production") {
+        const liff = (await import("@line/liff")).default;
+        liff.closeWindow();
+      }
+    })();
   }, []);
 };
