@@ -34,13 +34,21 @@ const postReport = async (userName: string) => {
 export const useReport = (liffId: string) => {
   useEffect(() => {
     (async () => {
-      const userName = await getProfile(liffId);
-      await Promise.all([sendMessage(userName), postReport(userName)]);
-
-      // Close rich menu
-      if (process.env.NODE_ENV === "production") {
-        const liff = (await import("@line/liff")).default;
-        liff.closeWindow();
+      try {
+        const userName = await getProfile(liffId);
+        await Promise.all([sendMessage(userName), postReport(userName)]);
+      } catch (e) {
+        if (e instanceof Error) {
+          alert(e.message);
+        } else {
+          alert("[Error] promise");
+        }
+      } finally {
+        // Close rich menu
+        if (process.env.NODE_ENV === "production") {
+          const liff = (await import("@line/liff")).default;
+          liff.closeWindow();
+        }
       }
     })();
   }, []);
