@@ -36,7 +36,6 @@ const postReport = async (userName: string) => {
 export const useReport = (liffId: string) => {
   useEffect(() => {
     (async () => {
-      alert(`${process.env.LIFF_ID_POST_APP}`);
       try {
         // const userName = await getProfile(liffId);
         // await Promise.all([sendMessage(userName), postReport(userName)]);
@@ -44,9 +43,10 @@ export const useReport = (liffId: string) => {
         // TEST
         let userName = "";
         try {
-          const userName = await getProfile(liffId);
+          userName = await getProfile(liffId);
         } catch (e) {
           if (e instanceof Error) {
+            alert("getProfile Error")
             throw e;
           }
         }
@@ -54,6 +54,7 @@ export const useReport = (liffId: string) => {
           await sendMessage(userName);
         } catch (e) {
           if (e instanceof Error) {
+            alert("sendMessage Error")
             throw e;
           }
         }
@@ -61,6 +62,7 @@ export const useReport = (liffId: string) => {
           await postReport(userName);
         } catch (e) {
           if (e instanceof Error) {
+            alert("postReport Error")
             throw e;
           }
         }
