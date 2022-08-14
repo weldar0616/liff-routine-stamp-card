@@ -4,7 +4,7 @@ import Calendar, {
   CalendarTileProperties,
   DateCallback,
 } from "react-calendar";
-import { beginningOfLastMonth, endOfMonth, formatForView } from "../lib/date";
+import { beginningOfLastMonth, endOfMonth, formatForView } from "../../lib/date";
 import prisma from "../../lib/prisma";
 import styles from "../../styles/Home.module.css";
 import Image from "next/image";

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useReport } from "../hooks/useReport";
+import { useReport } from "../../hooks/useReport";
 
 const ReportsPost: NextPage = () => {
   useReport();
